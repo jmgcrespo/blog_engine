@@ -36,6 +36,6 @@ describe Post do
   end
 
   it 'has many tags through posttags' do
-	skip  	
+  	@post.tags.length.must_equal(2)
   end
 end
