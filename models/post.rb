@@ -12,6 +12,7 @@ class Post < ActiveRecord::Base
 
   def tweet_author
   	if self.author.send_tweet
+  		Tweeter.new(self.author).tweet
   		@tweeted_author = true
   	end
   end
