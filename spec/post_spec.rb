@@ -1,13 +1,23 @@
 require_relative 'helper'
 
 describe Post do
-  it 'belongs to an author'
+  describe 'on creation of a post' do
+    it 'sends a tweet to the author' do
+      blog = Blog.create!(name: 'BenBlog')
+      author = blog.authors.create!(name: 'Ben', twitter_handle: '@benlovell')
+      category = blog.categories.create!(name: 'Introductions')
 
-  it 'has many comments'
+      post = category.posts.create!(
+        title: 'Hello, world',
+        content: 'Hi!',
+        author: author
+      )
 
-  it 'belongs to a category'
+      post.tweeted_author?.must_equal(true)
+    end
+  end
 
-  it 'belongs to a blog through a category'
-
-  it 'has many tags through posttags'
+  it 'defaults `tweeted_author?` to false' do
+    Post.new.tweeted_author?.must_equal(false)
+  end
 end
