@@ -5,7 +5,7 @@ describe Post do
 
 		before do
     @blog = Blog.create!(name: 'BenBlog')
-    @author = @blog.authors.create!(name: 'Ben Lovell')
+    @author = @blog.authors.create!(name: 'Ben Lovell', twitter_handle: 'benlovell')
     @category = @blog.categories.create!(name: 'Motorsports')
 
     @post=Post.create!(
@@ -19,6 +19,41 @@ describe Post do
     @tag1 = @post.tags.create!(name: "speed")
     @tag2 = @post.tags.create!(name: "noise")
 	end
+
+	describe 'on creation of a post' do
+		it 'doesn´t send a tweet befor create' do
+
+			post = @category.posts.new(title: 'Boats are great',
+							content: 'low comsumption',
+							author: @author)
+
+			post.tweeted_author?.must_equal(false)
+
+		end
+
+		it 'sends a tweet to the author if send_tweet true' do
+			@author.send_tweet = true
+
+			post = @author.posts.create!(
+				title: "Migrations as command pattern",
+				content: "There is litle else to say..",
+				category: @category)
+
+			post.tweet_author?must_equal(true)
+		end
+
+		it 'doesn´t sends a tweet to the author by default' do
+			
+			post = @author.posts.create!(
+				title: "Migrations as command pattern",
+				content: "There is litle else to say..",
+				category: @category)
+
+			post.tweet_author?must_equal(false)
+		end
+
+	end
+
   it 'belongs to an author' do
   	@author.posts.include?(@post)
   end

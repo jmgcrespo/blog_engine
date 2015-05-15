@@ -11,11 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150514133334) do
+ActiveRecord::Schema.define(version: 20150515143607) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "authors", force: :cascade do |t|
     t.string  "name"
     t.integer "blog_id"
+    t.string  "twitter_handle"
+    t.boolean "send_tweet",     default: false
   end
 
   create_table "blogs", force: :cascade do |t|
