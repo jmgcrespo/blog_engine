@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20150514145558) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "authors", force: :cascade do |t|
     t.string  "name"
     t.integer "blog_id"
@@ -35,4 +38,6 @@ ActiveRecord::Schema.define(version: 20150514145558) do
     t.integer "category_id"
   end
 
+  add_foreign_key "posts", "authors"
+  add_foreign_key "posts", "categories"
 end
