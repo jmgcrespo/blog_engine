@@ -16,7 +16,7 @@ class MiniTest::Test
     dbconfig = YAML::load(File.open('db/config.yml'))
     ActiveRecord::Base.establish_connection(dbconfig[ENV['RAILS_ENV']])
 
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.start
   end
 
