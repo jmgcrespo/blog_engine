@@ -39,7 +39,7 @@ describe Post do
 				content: "There is litle else to say..",
 				category: @category)
 
-			post.tweet_author?must_equal(true)
+			post.tweeted_author?.must_equal(true)
 		end
 
 		it 'doesn´t sends a tweet to the author by default' do
@@ -49,7 +49,7 @@ describe Post do
 				content: "There is litle else to say..",
 				category: @category)
 
-			post.tweet_author?must_equal(false)
+			post.tweeted_author?.must_equal(false)
 		end
 
 	end
