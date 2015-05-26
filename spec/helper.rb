@@ -18,7 +18,7 @@ require_relative '../claves'
 
 class MiniTest::Test
   def setup
-    dbconfig = YAML::load(File.open('db/config.yml'))
+    dbconfig = YAML.load(File.open('db/config.yml'))
     ActiveRecord::Base.establish_connection(dbconfig[ENV['RAILS_ENV']])
 
     DatabaseCleaner.strategy = :transaction

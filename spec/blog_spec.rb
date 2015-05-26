@@ -1,9 +1,8 @@
 require_relative 'helper'
-require "byebug"
+require 'byebug'
 
 describe Blog do
-
-	before do
+  before do
     @blog = Blog.create!(name: 'BenBlog')
     @author = @blog.authors.create!(name: 'Ben Lovell')
     @category = @blog.categories.create!(name: 'Motorsports')
@@ -14,37 +13,34 @@ describe Blog do
       author: @author,
       category: @category
     )
+  end
 
-	end
+  it 'is valid with valid attributes' do
+    @blog.valid?.must_equal(true)
+  end
 
-	
-	it 'is valid with valid attributes' do
-		@blog.valid?.must_equal(true)		
-	end
+  it 'require a name' do
+    blog = Blog.new
 
-	it 'require a name' do
-		blog = Blog.new
-		
-		blog.valid?.wont_equal(true)		
-	end
+    blog.valid?.wont_equal(true)
+  end
 
-	it 'requires a unique name' do
-		@blog2 = Blog.new(name: 'BenBlog')
+  it 'requires a unique name' do
+    @blog2 = Blog.new(name: 'BenBlog')
 
-		@blog2.valid?.must_equal(false)
-
-	end
+    @blog2.valid?.must_equal(false)
+  end
 
   it 'has many posts through categories' do
     @blog.posts.empty?.must_equal(false)
   end
 
   it 'has many authors' do
-    author2 = @blog.authors.create!(name: 'Manu')	
+    @blog.authors.create!(name: 'Manu')
     @blog.authors.length.must_equal(2)
   end
   it 'has many categories' do
-  	@blog.categories.create!(name: 'Sailing')
-  	@blog.categories.count.must_equal(2)
-	end
+    @blog.categories.create!(name: 'Sailing')
+    @blog.categories.count.must_equal(2)
+  end
 end

@@ -7,13 +7,12 @@ class Post < ActiveRecord::Base
   after_create :tweet_author
 
   def tweeted_author?
-  	@tweeted_author.present?
+    @tweeted_author.present?
   end
 
   def tweet_author
-  	if self.author.send_tweet
-  		Tweeter.new(self.author).tweet
-  		@tweeted_author = true
-  	end
+    return unless author.send_tweet
+    Tweeter.new(author)
+    @tweeted_author = true
   end
 end
